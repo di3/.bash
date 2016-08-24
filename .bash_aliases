@@ -1,4 +1,12 @@
-alias ll='ls -la'
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+	test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+	alias ls='ls --color=auto'
+	alias grep='grep --color=auto'
+	alias fgrep='fgrep --color=auto'
+	alias egrep='egrep --color=auto'
+fi
+alias ll='ls -la --group-directories-first'
 alias la='ls -A'
 alias l='ls -CF'
 alias lll='ls -la | less'
@@ -25,6 +33,7 @@ alias mt='mount | column -t'
 
 alias ports='netstat -tulanp'
 
+# output without comments
 alias nocomment='grep -Ev '\''^(#|$)'\'''
 
 # Shows the individual partition usages without the temporary memory values
