@@ -14,10 +14,10 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias cls='clear'
 
-## history
+# history
 alias hg='history | grep '
 
-## sudo
+# sudo
 alias apt-get='sudo apt-get'
 alias sudo='sudo '
 

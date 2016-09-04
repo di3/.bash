@@ -3,6 +3,18 @@ function pipe() {
 	${1:-} | ${2:-}
 }
 
+# mkdir and cd into it 
+function mkcd() {
+	mkdir -p -- "$1" && cd -P -- "$1"
+}
+
+# remove current directory
+function rmcd() {
+	local tmp=`pwd`
+	cd ..
+	rm -rf $tmp
+}
+
 # Find a file with a pattern in name:
 function ff() { find . -type f -iname '*'"$*"'*' -ls ; }
 
