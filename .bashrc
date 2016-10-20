@@ -1,6 +1,8 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+trap "" DEBUG
+
 # History settings
 export HISTIGNORE="&:ls:[bf]g:exit:reset:clear:cd*:ll:la:l:lll:cls:hg:history";
 export HISTSIZE=4096;
@@ -43,6 +45,26 @@ xterm*|rxvt*)
 *)
 	;;
 esac
+
+# dynamic screen titles
+if [ "$TERM" = "screen" ]; then
+    export PROMPT_COMMAND='true'
+    set_screen_window() {
+      HPWD=`basename "$PWD"`
+      if [ "$HPWD" = "$USER" ]; then HPWD='~'; fi
+      if [ ${#HPWD} -ge 10 ]; then HPWD='..'${HPWD:${#HPWD}-8:${#HPWD}}; fi
+      case "$BASH_COMMAND" in
+        *\033]0*);;
+        "true")
+            printf '\ek%s\e\\' "$HPWD"
+            ;;
+        *)
+            printf '\ek%s\e\\' "$HPWD: ${BASH_COMMAND:0:20}"
+            ;;
+      esac
+    }
+    trap set_screen_window DEBUG
+fi
 
 # EDITOR is vim
 export EDITOR=vim;
