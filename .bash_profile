@@ -20,8 +20,11 @@ LL=`lastlog -u \`basename $HOME\` | grep \`basename $HOME\``
 LL1=`echo $LL | awk '{ print $4 " " $5 " " $6 " " $9 " " $7 $8 }'`
 LL2=`echo $LL | awk '{ print $3 }'`
 
+DATE=`date`
+
 echo -e "
  \033[0;37m+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ \033[0;37m+  \033[1;31mToday.......: \033[0m$DATE
  \033[0;37m+  \033[1;31mWhoami......: \033[0m$WHOAMI
  \033[0;37m+  \033[1;31mLast Login..: \033[0m$LL1 from $LL2
  \033[0;37m+  \033[1;31mHostname....: \033[0m$HOSTN
