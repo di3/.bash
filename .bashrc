@@ -3,6 +3,11 @@
 
 trap "" DEBUG
 
+
+export LANG=de_DE.UTF-8
+export LANGUAGE=de_DE.UTF-8
+export LC_ALL=de_DE.UTF-8
+
 # History settings
 export HISTIGNORE="&:ls:[bf]g:exit:reset:clear:cd*:ll:la:l:lll:cls:hg:history";
 export HISTSIZE=4096;
@@ -50,9 +55,10 @@ esac
 if [ "$TERM" = "screen" ]; then
     export PROMPT_COMMAND='true'
     set_screen_window() {
-      HPWD=`basename "$PWD"`
+      #HPWD=`basename "$PWD"`
+			HPWD=`pwd`
       if [ "$HPWD" = "$USER" ]; then HPWD='~'; fi
-      if [ ${#HPWD} -ge 10 ]; then HPWD='..'${HPWD:${#HPWD}-8:${#HPWD}}; fi
+      if [ ${#HPWD} -ge 20 ]; then HPWD='..'${HPWD:${#HPWD}-18:${#HPWD}}; fi
       case "$BASH_COMMAND" in
         *\033]0*);;
         "true")

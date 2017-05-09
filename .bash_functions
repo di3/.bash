@@ -5,7 +5,7 @@ function pipe() {
 
 # mkdir and cd into it 
 function mkcd() {
-	mkdir -p -- "$1" && cd -P -- "$1"
+	mkdir -pv -- "$1" && cd -P -- "$1"
 }
 
 # remove current directory
@@ -58,12 +58,14 @@ function swap() {
 	mv $TMPFILE "$2"
 }
 
-# extract
-function extract() {
+# aextract
+function aextract() {
 	if [ -f $1 ] ; then
 		case $1 in
 			*.tar.bz2)	tar xvjf $1;;
 			*.tar.gz)		tar xvzf $1;;
+      *.tar.xz)   tar xvJf $1;;
+      *.tar.7z)   7za x -so $1 | tar xf - --numeric-owner;;
 			*.bz2)			bunzip2 $1;;
 			*.gz)				gunzip $1;;
 			*.tar)			tar xvf $1;;
@@ -79,8 +81,37 @@ function extract() {
 	fi
 }
 
-# Creates an archive (*.tar.gz) from given directory.
-function maketar() { tar cvzf "${1%%/}.tar.gz"  "${1%%/}/"; }
+function alist() {
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2)  tar -jtvf $1;;
+      *.tar.gz)   tar -ztvf $1;;
+      *.gz)       tar -ztf $1;;
+      *.tar)      tar -tf $1;;
+      *.zip)      unzip -l $1;;
+      *.7z)       7z l $1;;
+      *) echo "don't know how to list '$1'" ;;
+    esac
+  else
+    echo "'$1' is not a valid file!"
+  fi
 
-# Create a ZIP archive of a file or folder.
-function makezip() { zip -r "${1%%/}.zip" "$1" ; }
+}
+
+function acreate() {
+  if [ -d $2 ] ; then
+    case $1 in
+      *.tar.gz)   tar -zcvf $1 $2;;
+      *.tar.7z)   tar cf - $2 | 7za a -si $1;;
+      *.gz)       tar -zcvf $1 $2;;
+      *.tar)      tar -cf $1 $2;;
+      *.zip)      7z a -tzip $1 $2;;
+      *.7z)       7z a -t7z $1 $2;;
+      *.tar.7z)       7z a -t7z $1 $2;;
+      *) echo "don't know how to create '$1'" ;;
+    esac
+  else
+    echo "'$1' is not a valid file!"
+  fi
+  
+}

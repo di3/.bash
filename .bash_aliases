@@ -29,6 +29,8 @@ alias psmem10='ps auxf | sort -nr -k 4 | head -10'
 alias pscpu='ps auxf | sort -nr -k 3'
 alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
 
+alias psg='ps aux | grep -v grep | grep -i -e VSZ -e'
+
 alias mt='mount | column -t'
 
 alias ports='netstat -tulanp'
@@ -49,13 +51,13 @@ alias ktcp='sudo ngrep -qK 1 $1 -d wlan0'
 alias c='sudo lsof -n -P -i +c 15'
 
 # git stuff
-alias g="git"
-alias gr="git rm -rf"
-alias gs="git status"
-alias ga="g add"
-alias gc="git commit -m"
-alias gp="git push origin master"
-alias gl="git pull origin master"
+alias gr='git rm -rf'
+alias gs='git status'
+alias ga='git add'
+alias gc='git commit -m'
+alias gp='git push origin master'
+alias gl='git pull origin master'
 
 # some other things
 alias sha1='openssl sha1'
+
