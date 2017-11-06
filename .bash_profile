@@ -14,8 +14,8 @@ SSHTTY=`printenv SSH_TTY`
 SSHCOUNT=`who | grep pts/ | wc -l`
 
 #vim /etc/ssh/sshd_config
-# █ Change:  PrintLastLog yes
-# █ To:      PrintLastLog no
+# Change:  PrintLastLog yes
+# To:      PrintLastLog no
 LL=`lastlog -u \`basename $HOME\` | grep \`basename $HOME\``
 LL1=`echo $LL | awk '{ print $4 " " $5 " " $6 " " $9 " " $7 $8 }'`
 LL2=`echo $LL | awk '{ print $3 }'`

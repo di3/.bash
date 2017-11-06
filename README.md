@@ -18,3 +18,10 @@ if [ -f ~/.bash_functions ]; then
    . ~/.bash_functions
 fi
 ```
+
+## [.bash_profile](https://github.com/di3/bashrc/blob/master/.bash_profile)
+```sh
+vim /etc/ssh/sshd_config
+# Change:  PrintLastLog yes
+# To:      PrintLastLog no
+```
