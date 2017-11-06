@@ -6,7 +6,8 @@ if [ -x /usr/bin/dircolors ]; then
 	alias fgrep='fgrep --color=auto'
 	alias egrep='egrep --color=auto'
 fi
-alias ll='ls -la --group-directories-first'
+alias ll='ls -l --group-directories-first'
+alias lla='ls -la --group-directories-first'
 alias la='ls -A'
 alias l='ls -CF'
 alias lll='ls -la | less'
