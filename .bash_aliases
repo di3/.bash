@@ -7,12 +7,13 @@ if [ -x /usr/bin/dircolors ]; then
 	alias egrep='egrep --color=auto'
 fi
 alias ll='ls -l --group-directories-first'
-alias lla='ls -la --group-directories-first'
+alias lla='ls -lA --group-directories-first'
 alias la='ls -A'
 alias l='ls -CF'
 alias lll='ls -la | less'
 alias ..='cd ..'
 alias ...='cd ../..'
+alias ....='cd ../../..'
 alias cls='clear'
 
 # history
