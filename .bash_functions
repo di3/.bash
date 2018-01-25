@@ -115,5 +115,9 @@ function acreate() {
 
 #grep files and open them with vim
 function vg() {
-  vim -p $(ls -a | grep $1)
+  if [ $2 ] ; then
+    vim -p $(ls -A -d -1 $PWD/$1* | grep $2)
+  else
+    vim -p $(ls -A | grep $1)
+  fi
 }
