@@ -19,8 +19,7 @@ function rmcd() {
 function ff() { find . -type f -iname '*'"$*"'*' -ls ; }
 
 # Find a file with pattern $1 in name and Execute $2 on it:
-function fe() { find . -type f -iname '*'"${1:-}"'*' \
--exec ${2:-file} {} \;  ; }
+function fe() { find . -type f -iname '*'"${1:-}"'*' -exec ${2:-file} {} \;  ; }
 
 #  Find a pattern in a set of files and highlight them:
 #+ (needs a recent version of egrep).
@@ -28,7 +27,7 @@ function fstr() {
 	OPTIND=1
 	local mycase=""
 	local usage="fstr: find string in files.
-Usage: fstr [-i] \"pattern\" [\"filename pattern\"] "
+  Usage: fstr [-i] \"pattern\" [\"filename pattern\"] "
 	while getopts :it opt
 	do
 		case "$opt" in
@@ -42,7 +41,7 @@ Usage: fstr [-i] \"pattern\" [\"filename pattern\"] "
 		return;
 	fi
 	find . -type f -name "${2:-*}" -print0 | \
-xargs -0 egrep --color=always -sn ${case} "$1" 2>&- | more
+  xargs -0 egrep --color=always -sn ${case} "$1" 2>&- | more
 }
 
 # swap two files
@@ -95,7 +94,6 @@ function alist() {
   else
     echo "'$1' is not a valid file!"
   fi
-
 }
 
 function acreate() {
@@ -113,5 +111,9 @@ function acreate() {
   else
     echo "'$1' is not a valid file!"
   fi
-  
+}
+
+#grep files and open them with vim
+function vg() {
+  vim -p $(ls -a | grep $1)
 }

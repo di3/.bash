@@ -62,4 +62,3 @@ alias gl='git pull origin master'
 
 # some other things
 alias sha1='openssl sha1'
-
