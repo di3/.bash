@@ -1,18 +1,37 @@
+# git status
+function gu() {
+  local UPSTREAM=${1:-'@{u}'}
+  local LOCAL=$(git rev-parse @)
+  local REMOTE=$(git rev-parse "$UPSTREAM")
+  local BASE=$(git merge-base @ "$UPSTREAM")
+
+  git fetch
+  if [ "$LOCAL" = "$REMOTE" ]; then
+    echo "Up-to-date"
+  elif [ "$LOCAL" = "$BASE" ]; then
+    echo "Need to pull"
+  elif [ "$REMOTE" = "$BASE" ]; then
+    echo "Need to push"
+  else
+    echo "Diverged"
+  fi
+}
+
 # pipe something
 function pipe() {
-	${1:-} | ${2:-}
+  ${1:-} | ${2:-}
 }
 
 # mkdir and cd into it 
 function mkcd() {
-	mkdir -pv -- "$1" && cd -P -- "$1"
+  mkdir -pv -- "$1" && cd -P -- "$1"
 }
 
 # remove current directory
 function rmcd() {
-	local tmp=`pwd`
-	cd ..
-	rm -rf $tmp
+  local tmp=`pwd`
+  cd ..
+  rm -rf $tmp
 }
 
 # Find a file with a pattern in name:
@@ -24,60 +43,60 @@ function fe() { find . -type f -iname '*'"${1:-}"'*' -exec ${2:-file} {} \;  ; }
 #  Find a pattern in a set of files and highlight them:
 #+ (needs a recent version of egrep).
 function fstr() {
-	OPTIND=1
-	local mycase=""
-	local usage="fstr: find string in files.
+  OPTIND=1
+  local mycase=""
+  local usage="fstr: find string in files.
   Usage: fstr [-i] \"pattern\" [\"filename pattern\"] "
-	while getopts :it opt
-	do
-		case "$opt" in
-			i) mycase="-i " ;;
-		   *) echo "$usage"; return ;;
-		esac
-	done
-	shift $(( $OPTIND - 1 ))
-	if [ "$#" -lt 1 ]; then
-		echo "$usage"
-		return;
-	fi
-	find . -type f -name "${2:-*}" -print0 | \
+  while getopts :it opt
+  do
+    case "$opt" in
+      i) mycase="-i " ;;
+       *) echo "$usage"; return ;;
+    esac
+  done
+  shift $(( $OPTIND - 1 ))
+  if [ "$#" -lt 1 ]; then
+    echo "$usage"
+    return;
+  fi
+  find . -type f -name "${2:-*}" -print0 | \
   xargs -0 egrep --color=always -sn ${case} "$1" 2>&- | more
 }
 
 # swap two files
 function swap() {
-	local TMPFILE=tmp.$$
+  local TMPFILE=tmp.$$
 
-	[ $# -ne 2 ] && echo "swap: 2 arguments needed" && return 1
-	[ ! -e $1 ] && echo "swap: $1 does not exist" && return 1
-	[ ! -e $2 ] && echo "swap: $2 does not exist" && return 1
+  [ $# -ne 2 ] && echo "swap: 2 arguments needed" && return 1
+  [ ! -e $1 ] && echo "swap: $1 does not exist" && return 1
+  [ ! -e $2 ] && echo "swap: $2 does not exist" && return 1
 
-	mv "$1" $TMPFILE
-	mv "$2" "$1"
-	mv $TMPFILE "$2"
+  mv "$1" $TMPFILE
+  mv "$2" "$1"
+  mv $TMPFILE "$2"
 }
 
 # aextract
 function aextract() {
-	if [ -f $1 ] ; then
-		case $1 in
-			*.tar.bz2)	tar xvjf $1;;
-			*.tar.gz)		tar xvzf $1;;
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2)  tar xvjf $1;;
+      *.tar.gz)    tar xvzf $1;;
       *.tar.xz)   tar xvJf $1;;
       *.tar.7z)   7za x -so $1 | tar xf - --numeric-owner;;
-			*.bz2)			bunzip2 $1;;
-			*.gz)				gunzip $1;;
-			*.tar)			tar xvf $1;;
-			*.tbz2)			tar xvjf $1;;
-			*.tgz)			tar xvzf $1;;
-			*.zip)			unzip $1;;
-			*.Z)				uncompress $1;;
-			*.7z)				7zr x $1;;
-			*) echo "don't know how to extract '$1'" ;;
-		esac
-	else
-		echo "'$1' is not a valid file!"
-	fi
+      *.bz2)      bunzip2 $1;;
+      *.gz)        gunzip $1;;
+      *.tar)      tar xvf $1;;
+      *.tbz2)      tar xvjf $1;;
+      *.tgz)      tar xvzf $1;;
+      *.zip)      unzip $1;;
+      *.Z)        uncompress $1;;
+      *.7z)        7zr x $1;;
+      *) echo "don't know how to extract '$1'" ;;
+    esac
+  else
+    echo "'$1' is not a valid file!"
+  fi
 }
 
 function alist() {
@@ -115,9 +134,15 @@ function acreate() {
 
 #grep files and open them with vim
 function vg() {
-  if [ $2 ] ; then
-    vim -p $(ls -A -d -1 $PWD/$1* | grep $2)
+  local usage="vg [path] grepstring"
+  if [ -z "$1" ] ; then
+    echo "No argument supplied"
+    echo -e $usage
   else
-    vim -p $(ls -A | grep $1)
+    if [ $2 ] ; then
+      vim -p $(ls -A -d -1 $PWD/$1* | grep $2)
+    else
+      vim -p $(ls -A | grep $1)
+    fi
   fi
 }
