@@ -1,23 +1,20 @@
 # bashrc
+
+# Install
+
+clone this repository to ~/.bash/ cd into and run link.sh
+
+```sh
+git clone https://github.com/di3/.bash.git
+cd .bash
+./link.sh
+```
+
 ## [.bashrc](https://github.com/di3/bashrc/blob/master/.bashrc)
 
 ## [.bash_aliases](https://github.com/di3/bashrc/blob/master/.bash_aliases)
 
-make sure you load the file in your .bashrc
-```sh
-if [ -f ~/.bash_aliases ]; then
-   . ~/.bash_aliases
-fi
-```
-
 ## [.bash_functions](https://github.com/di3/bashrc/blob/master/.bash_functions)
-
-make sure you load the file in your .bashrc
-```sh
-if [ -f ~/.bash_functions ]; then
-   . ~/.bash_functions
-fi
-```
 
 ## [.bash_profile](https://github.com/di3/bashrc/blob/master/.bash_profile)
 ```sh

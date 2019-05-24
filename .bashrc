@@ -3,10 +3,9 @@
 
 trap "" DEBUG
 
-
 export LANG=de_DE.UTF-8
 export LANGUAGE=de_DE.UTF-8
-export LC_ALL=de_DE.UTF-8
+#export LC_ALL=de_DE.UTF-8
 
 # History settings
 export HISTIGNORE="&:ls:[bf]g:exit:reset:clear:cd*:ll:la:l:lll:cls:hg:history";
