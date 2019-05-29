@@ -7,6 +7,11 @@ export LANG=de_DE.UTF-8
 export LANGUAGE=de_DE.UTF-8
 #export LC_ALL=de_DE.UTF-8
 
+#bell
+if [ -n "$DISPLAY" ]; then
+  xset b off
+fi
+
 # History settings
 export HISTIGNORE="&:ls:[bf]g:exit:reset:clear:cd*:ll:la:l:lll:cls:hg:history";
 export HISTSIZE=4096;
@@ -35,7 +40,11 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w \$\[\033[00m\] '
+  if [[ $EUID == 0 ]] ; then
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w \$\[\033[00m\] '
+  else
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w \$\[\033[00m\] '
+  fi
 else
   PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
